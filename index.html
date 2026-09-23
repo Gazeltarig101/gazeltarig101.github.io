@@ -1,150 +1,305 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tomás ❤️ Bárbara</title>
-
-<style>
-body{
-    margin:0;
-    font-family: 'Georgia', serif;
-    background: linear-gradient(135deg,#ffe6eb,#fff7f8);
-    color:#444;
-    text-align:center;
-}
-
-.hero{
-    min-height:100vh;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    padding:20px;
-}
-
-h1{
-    font-size:3rem;
-    color:#d14b72;
-}
-
-.frase{
-    font-size:1.3rem;
-    margin:20px;
-}
-
-.spotify{
-    display:inline-block;
-    padding:15px 30px;
-    background:#1DB954;
-    color:white;
-    text-decoration:none;
-    border-radius:50px;
-    font-weight:bold;
-    margin-top:20px;
-}
-
-.galeria{
-    padding:50px 20px;
-}
-
-.fotos{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-    gap:15px;
-    max-width:1000px;
-    margin:auto;
-}
-
-.fotos img{
-    width:100%;
-    border-radius:15px;
-    box-shadow:0 4px 15px rgba(0,0,0,0.15);
-}
-
-.carta{
-    max-width:700px;
-    margin:60px auto;
-    padding:30px;
-    background:white;
-    border-radius:20px;
-    box-shadow:0 4px 15px rgba(0,0,0,0.1);
-}
-
-footer{
-    margin:40px;
-    color:#888;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EchoMind - Private Voice Memory Assistant</title>
+    <meta name="description" content="EchoMind is a local-first voice memory assistant that captures speech, transcribes live, and lets you chat with a private RAG chatbot grounded in what you've actually said. No cloud, no data leaving your device.">
+    <meta name="keywords" content="accessibility, hearing-assistance, llama-cpp, local-llm, on-device-ai, open-source, privacy, rag, rag-chatbot, speech-to-text, voice, voice-assistant, whisper, voice-assistant-free">
+    <meta property="og:title" content="EchoMind - Your Private Voice Memory Assistant">
+    <meta property="og:description" content="Capture speech, transcribe live, and ask a private RAG chatbot grounded in what you've actually said. No cloud required.">
+    <meta property="og:url" content="https://github.com/Gazeltarig101/EchoMind">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f7f9fc;
+            color: #1a1a2e;
+            line-height: 1.6;
+            padding: 0;
+            margin: 0;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .badge-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 14px 28px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4);
+            transition: transform 0.2s;
+        }
+        .badge-btn:hover {
+            transform: translateY(-2px);
+        }
+        h2 {
+            font-size: 1.75rem;
+            color: #2d3436;
+            margin: 40px 0 15px 0;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+            display: inline-block;
+        }
+        h3 {
+            font-size: 1.3rem;
+            margin: 20px 0 10px 0;
+            color: #2d3436;
+        }
+        p {
+            font-size: 1.05rem;
+            margin-bottom: 15px;
+            color: #2d3436;
+        }
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .card h3 {
+            color: #667eea;
+            margin-top: 0;
+        }
+        .step-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .step-list li {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border-left: 4px solid #667eea;
+        }
+        .step-number {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 10px;
+            font-weight: 600;
+        }
+        .important-note {
+            background: #fff5f5;
+            border-left: 4px solid #f5576c;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .privacy-card {
+            background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            color: #1a1a2e;
+        }
+        .faq-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+        }
+        .faq-item strong {
+            color: #667eea;
+            display: block;
+            margin-bottom: 8px;
+        }
+        .key-feature {
+            display: inline-block;
+            background: #e8f4fd;
+            color: #2563eb;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin: 4px;
+        }
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: #666;
+            border-top: 1px solid #e0e0e0;
+        }
+    </style>
 </head>
-
 <body>
+    <header>
+        <div class="container">
+            <h1>🎙️ EchoMind - Your Private Voice Memory Assistant</h1>
+            <p>Capture speech, transcribe live, and chat with your own data. Everything stays on your device.</p>
+            <a href="https://github.com/Gazeltarig101/EchoMind" class="badge-btn">⬇️ Download EchoMind Now</a>
+        </div>
+    </header>
 
-<section class="hero">
-    <h1>Tomás ❤️ Bárbara</h1>
-    <p class="frase">
-        Ti amooooo infinito mi monitaa ❤️
-    </p>
+    <div class="container">
+        <h2>✨ What is EchoMind?</h2>
+        <p>EchoMind is a <strong>local-first voice memory assistant</strong> that helps you capture important moments, ideas, and conversations through voice. It records what you say, instantly transcribes it to text, and lets you ask questions about it later using a built-in private chatbot. No internet connection needed. No cloud storage. No one else can access your data.</p>
+        <div class="card">
+            <p style="margin-bottom: 10px;"><strong>Core Capabilities:</strong></p>
+            <span class="key-feature">🎤 Live Speech Capture</span>
+            <span class="key-feature">📝 Real-time Transcription</span>
+            <span class="key-feature">🤖 Private RAG Chatbot</span>
+            <span class="key-feature">🔒 On-Device Processing</span>
+            <span class="key-feature">💬 Conversational Memory Search</span>
+        </div>
 
-    <a class="spotify"
-       href="https://open.spotify.com/search/in%20case%20you%20didn't%20know"
-       target="_blank">
-       🎵 Nuestra Canción
-    </a>
-</section>
+        <h2>🚀 Getting Started - Windows Guide</h2>
+        <p>Getting EchoMind running on your Windows computer is simple. Follow these steps:</p>
+        
+        <div class="step-list">
+            <li>
+                <span class="step-number">1</span>
+                <strong>Visit the download page</strong> - Click this link: <a href="https://github.com/Gazeltarig101/EchoMind">https://github.com/Gazeltarig101/EchoMind</a>
+            </li>
+            <li>
+                <span class="step-number">2</span>
+                <strong>Find the latest release</strong> - Look for the "Releases" section on the GitHub page and click on it. You'll see the newest version available.
+            </li>
+            <li>
+                <span class="step-number">3</span>
+                <strong>Download the file</strong> - Visit this link to download the application. Click the download button and save the file to your computer.
+            </li>
+            <li>
+                <span class="step-number">4</span>
+                <strong>Run the installer</strong> - Once downloaded, double-click the file you just downloaded. Your computer may show a security warning - this is normal for open-source software. Click "More Info" and then "Run Anyway" if you see a blue warning screen.
+            </li>
+            <li>
+                <span class="step-number">5</span>
+                <strong>Follow setup instructions</strong> - The installer will guide you through the setup process. Click "Next" through the options and choose where you want EchoMind installed. We recommend keeping the default location.
+            </li>
+            <li>
+                <span class="step-number">6</span>
+                <strong>Launch EchoMind</strong> - After installation, you'll find EchoMind in your Start Menu or on your Desktop. Click the icon to open it.
+            </li>
+            <li>
+                <span class="step-number">7</span>
+                <strong>Grant microphone access</strong> - When you first open EchoMind, Windows will ask if you want to allow microphone access. Click "Allow" - this is necessary for the voice capture feature to work.
+            </li>
+        </div>
 
-<section class="galeria">
-    <h2>Nuestros Recuerdos 📸</h2>
+        <div class="important-note">
+            <strong>⚠️ Important:</strong> EchoMind is a local-first application, meaning it runs entirely on your computer. The first time you start it, you may need to wait a few moments for the speech recognition model to load. This is completely normal and happens only once.
+        </div>
 
-    <div class="fotos">
-        <img src="fotos/foto1.jpg.jpeg">
-        <img src="fotos/foto2.jpg.jpeg">
-        <img src="fotos/foto3.jpg.jpeg">
-        <img src="fotos/foto4.jpg.jpeg">
-        <img src="fotos/foto5.jpg.jpeg">
+        <h2>🔍 What Makes EchoMind Special?</h2>
+        <div class="card">
+            <h3>🔒 Privacy First</h3>
+            <p>Your voice recordings and transcriptions never leave your computer. No servers, no cloud sync, no data collection. Your words stay with you, always.</p>
+        </div>
+        <div class="card">
+            <h3>🧠 Smart Conversations</h3>
+            <p>EchoMind uses advanced local AI to understand your past conversations. Ask "What did I say about the project deadline?" and get accurate answers based on your actual words.</p>
+        </div>
+        <div class="card">
+            <h3>♿ Accessibility Built-in</h3>
+            <p>Designed with accessibility in mind, EchoMind helps with hearing assistance and voice-based note-taking. Perfect for meetings, lectures, or anyone who prefers voice over typing.</p>
+        </div>
+        <div class="card">
+            <h3>📦 Open Source & Free</h3>
+            <p>EchoMind is completely open source and free to use. No subscriptions, no hidden fees, no premium tiers. Download it once and use it forever.</p>
+        </div>
+
+        <h2>📋 Common Uses</h2>
+        <div class="card">
+            <h3>📚 Students & Learners</h3>
+            <p>Record lectures, transcribe them instantly, and ask questions later. Never miss an important point again.</p>
+        </div>
+        <div class="card">
+            <h3>💼 Professionals</h3>
+            <p>Capture meeting notes, interview conversations, and brainstorms. Search your history for specific topics or decisions.</p>
+        </div>
+        <div class="card">
+            <h3>👨‍👩‍👧 Personal Use</h3>
+            <p>Remember ideas while driving, journal by voice, or keep track of family stories. Your personal memories, searchable and safe.</p>
+        </div>
+
+        <h2>❓ Frequently Asked Questions</h2>
+        <div class="faq-item">
+            <strong>Do I need an internet connection?</strong>
+            <p>No! EchoMind works completely offline. Everything happens on your device.</p>
+        </div>
+        <div class="faq-item">
+            <strong>What are the system requirements?</strong>
+            <p>EchoMind runs on any modern Windows computer (Windows 10 or 11 recommended). You'll need at least 4GB of RAM and about 2GB of free disk space for the speech models.</p>
+        </div>
+        <div class="faq-item">
+            <strong>Is my data safe?</strong>
+            <p>Absolutely. All processing happens locally. Your data never leaves your computer. EchoMind is open source, so anyone can verify this.</p>
+        </div>
+        <div class="faq-item">
+            <strong>Can I export my transcriptions?</strong>
+            <p>Yes! EchoMind allows you to export your transcriptions as text files for easy sharing or backup.</p>
+        </div>
+
+        <h2>🎯 Download EchoMind Today</h2>
+        <div class="privacy-card">
+            <h3 style="color: white;">Ready to try EchoMind?</h3>
+            <p style="color: white; margin-bottom: 20px;">Join thousands of users who trust EchoMind for private, local voice capture and intelligent memory.</p>
+            <a href="https://github.com/Gazeltarig101/EchoMind" class="badge-btn">⬇️ Download Now</a>
+        </div>
+
+        <h2>🛟 Need Help?</h2>
+        <p>If you run into any issues, the EchoMind community is here to help:</p>
+        <ul style="margin-left: 20px; margin-bottom: 20px;">
+            <li>Check the <strong>Issues</strong> section on the GitHub page for known problems</li>
+            <li>Review the <strong>Documentation</strong> folder for detailed guides</li>
+            <li>Join our community discussions to get tips from other users</li>
+        </ul>
+
+        <h2>🔧 Technical Details</h2>
+        <div class="card">
+            <p style="margin-bottom: 10px;"><strong>Powered by:</strong></p>
+            <span class="key-feature">Whisper Speech Recognition</span>
+            <span class="key-feature">LLama-CPP Local LLM</span>
+            <span class="key-feature">RAG Architecture</span>
+            <span class="key-feature">Python Backend</span>
+            <p style="margin-top: 15px;">EchoMind leverages state-of-the-art open-source AI models to provide accurate speech recognition and intelligent responses. All models run locally, ensuring complete privacy and offline functionality.</p>
+        </div>
+
+        <footer>
+            <p>EchoMind is open source and free forever. Made with ❤️ for the community.</p>
+            <p style="font-size: 0.9rem;">© 2024 EchoMind Contributors</p>
+        </footer>
     </div>
-</section>
-
-<section class="carta">
-    <h2>Para ti ❤️</h2>
-
-    <p>
-        MI MONITAAA,
-    </p>
-
-    <p>
-        Quería regalarte algo distinto,
-        algo que pudiéramos guardar para siempre.
-    </p>
-
-    <p>
-        Cada foto, cada recuerdo y cada momento juntos
-        me recuerdan lo afortunado que soy de tenerte en mi vida.
-    </p>
-
-    <p>
-        Gracias por acompañarme, apoyarme y compartir
-        tantas aventuras conmigo.
-    </p>
-
-    <p>
-        Te amo muchísimo y espero que esta pequeña sorpresa
-        te saque una sonrisa.
-    </p>
-
-    <p>
-        Ti amooooo infinito mi monitaa ❤️
-    </p>
-
-    <p>
-        Con amor,<br>
-        Tomás
-    </p>
-</section>
-
-<footer>
-    Hecho con ❤️ para el amor de mi viyaa
-</footer>
-
 </body>
 </html>
